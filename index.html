@@ -59,6 +59,8 @@
         } else {
           deflated = Base64.fromBase64(base64);
           input = RawDeflate.inflate(deflated);
+          // clean up weird characters
+          input = input.replace(/[^\x20-\x7E]/g, '');
         }
         console.log(input)
       }
