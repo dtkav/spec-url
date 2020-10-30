@@ -33,41 +33,14 @@
   <body>
     <div id="swagger-ui"></div>
 
-    <script src="dist/swagger-ui-bundle.js"> </script>
-    <script src="dist/swagger-ui-standalone-preset.js"> </script>
-    <script type="text/javascript" src="vendor/base64.js"></script>
-    <script type="text/javascript" src="vendor/rawinflate.js"></script>
-    <script type="text/javascript" src="vendor/rawdeflate.js"></script>
+    <script src="dist/swagger-ui-bundle.js" charset="UTF-8"> </script>
+    <script src="dist/swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
     <script>
     window.onload = function() {
-      var base64, check, checksum, deflated, encoded, input;
-      checksum = function(string) {
-        var chk, chr, i;
-        chk = 0;
-        for (i in string) {
-          chr = string[i];
-          chk += chr.charCodeAt(0) * (i + 1);
-        }
-        return chk % 10;
-      };
-      if (window.location.hash) {
-        encoded = window.location.hash.replace(/^#/, '');
-        base64 = encoded.slice(0, (encoded.length - 2) + 1 || 9e9);
-        check = parseInt(encoded.slice(encoded.length - 1, encoded.length + 1 || 9e9));
-        if (check !== checksum(base64)) {
-          return alert('Something got corrupted :(');
-        } else {
-          deflated = Base64.fromBase64(base64);
-          input = RawDeflate.inflate(deflated);
-          // clean up weird characters
-          input = input.replace(/[^\x20-\x7E]/g, '');
-        }
-        console.log(input)
-      }
       // Begin Swagger UI call region
       const ui = SwaggerUIBundle({
+        url: "swagger.yaml",
         dom_id: '#swagger-ui',
-        spec: JSON.parse(input),
         deepLinking: true,
         presets: [
           SwaggerUIBundle.presets.apis,
@@ -82,9 +55,6 @@
 
       window.ui = ui
     }
-
-
-
   </script>
   </body>
 </html>
